@@ -2,7 +2,10 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.0.8.
 
-## Development server
+# After The clone From git
+  on the node.js terminal Run npm install to download the node_modules. After downloading the node_modules.
+
+## Development serve\
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
