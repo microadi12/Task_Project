@@ -1,0 +1,70 @@
+<div class="container-fluid overflow-x">
+  <div class="row justify-content-center d-flex bg-color">
+
+   <!--  search field & button -->
+    <ul class="col-md-8 col-sm-8 col-xs-8 mr">
+      <form #f="ngForm">
+        <li class="col-md-10 col-sm-10 col-xs-10 d-inline-block">
+          <input type="text" class="form-control" placeholder="Search Here" name="search" [(ngModel)]="search" (keyup)="keyDownFunction($event, search)" required>
+        </li>
+        <li class="col-md-2 col-sm-2 col-xs-2 searchbtn">
+          <button type="button" class="btn btn-primary btn-md" (click)="searchUser()" [disabled]="!f.valid">Search</button>
+        </li>
+      </form>
+    </ul>
+  </div>
+  <div class="row justify-content-center d-flex">
+    <div class="col-lg-10">
+    <!--   User Count Block -->
+      <div class="row countrow" *ngIf="this.totalCount > 0 && isCount_Visible">
+        <p class="mt-2">{{this.totalCount | number}} Users Found</p>
+      </div>
+     <!--   User Not Found Block -->
+      <div class="row" *ngIf="this.totalCount == 0">
+        <div class="px-2 mr-auto ml-auto">
+          <div class="blankslate">
+            <i class="fa fa-search"></i>
+            <h3>
+              We couldn’t find any users matching '{{this.notfound}}'
+            </h3>
+          </div>
+        </div>
+      </div>
+     <!--   User List Data -->
+      <div class="row justify-content-center rowdata" *ngFor="let user of searchList | paginate: { itemsPerPage: 5, currentPage: p}">
+        <div class="col-md-2 col-sm-2 col-xs-2">
+          <img class="img-fluid rounded" src="{{user.avatar_url}}" [routerLink]="['/userInfo/id=/', user.login]" alt="user img">
+        </div>
+        <div class="col-md-10 col-sm-10 col-xs-10  render my-auto">
+          <div class="row">
+            <div class="col-md-10 col-sm-10 col-xs-10 mb-1 contain-p render">
+              <div>
+                <a [routerLink]="['/userInfo/id=/',  user.login]">{{user.login}}</a>
+                <span class="ml-3">{{user.name}}</span>
+              </div>
+              <div class="font-size text-dark">
+                <span *ngIf="user.location != null">
+                  <i class="font-size fa fa-map-marker" aria-hidden="true"></i>{{user.location}} |
+                </span>
+                <span *ngIf="user.company != null">
+                  <i class="font-size fa fa-briefcase" aria-hidden="true"></i> {{user.company}} |
+                </span>
+                <span *ngIf="user.blog != null">
+                  <i class="font-size fa fa-rss-square" aria-hidden="true"></i> {{user.blog}}
+                </span>
+              </div>
+              <div class="font-size">
+                <p class="mb-0">{{user.bio}}</p>
+              </div>
+            </div>
+            <div class="col-md-2 col-sm-2 col-xs-2 btn-p render my-auto">
+              <a [routerLink]="['/userInfo/id=/',  user.login]"> <button class="btn btn-success btn-sm">More Info</button></a>
+            </div>
+          </div>
+        </div>
+      </div>
+<!--       pagination -->
+      <pagination-controls *ngIf="this.totalCount > 0 && isCount_Visible" class="text-center" (pageChange)="p = $event"></pagination-controls>
+    </div>
+  </div>
+</div>
