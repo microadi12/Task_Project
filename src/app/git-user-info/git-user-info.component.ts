@@ -39,21 +39,20 @@ export class GitUserInfoComponent implements OnInit {
   modal: any;
   remodal: any;
     clone_url: any;
-    p: number = 1;
-    following: any[] = this.listFollowing; 
-    followers : any[] = this.listFollowers
+    p = 1;
+    following: any[] = this.listFollowing;
+    followers: any[] = this.listFollowers;
   error: any;
   userrepo: any[];
 
   constructor(private route: ActivatedRoute, private userservice: UserService, private http: Http) { }
 
   ngOnInit() {
-    
     this.modal = $('#modal').remodal();
 
     this.route.paramMap.subscribe(params => {
-      this.loginId = params.get("login");
-      this.userservice.userDetails(params.get("login")).subscribe(res => {
+      this.loginId = params.get('login');
+      this.userservice.userDetails(params.get('login')).subscribe(res => {
         this.image_url = res.json().avatar_url;
         this.name = res.json().name;
         this.username = res.json().login;
@@ -65,38 +64,37 @@ export class GitUserInfoComponent implements OnInit {
         this.joinDate = res.json().created_at;
         this.repo_url = res.json().repos_url;
         this.follower_url = res.json().followers_url;
-        this.follower_url = this.follower_url.substring(this.follower_url.indexOf("users") + 6)
+        this.follower_url = this.follower_url.substring(this.follower_url.indexOf('users') + 6);
         this.following_url = res.json().following_url;
-        this.following_url = this.following_url.substring(0, this.following_url.indexOf("{"));
-      
+        this.following_url = this.following_url.substring(0, this.following_url.indexOf('{'));
+        // tslint:disable-next-line:no-shadowed-variable
         this.http.get(res.json().repos_url).subscribe(res => {
-          this.userrepo = res.json()
-          this.repo_length = this.userrepo.length
-        
+          this.userrepo = res.json();
+          this.repo_length = this.userrepo.length;
         }, err => {
           this.error = err.json().message;
-        })
+        });
 
+        // tslint:disable-next-line:no-shadowed-variable
         this.http.get(this.following_url).subscribe(res => {
-      
           this.following_users_data = res.json();
           this.following_count = this.following_users_data.length;
-          for (let i = 0; i < this.following_users_data.length/3; i++) {
+          for (let i = 0; i < this.following_users_data.length / 3; i++) {
+            // tslint:disable-next-line:no-shadowed-variable
             this.userservice.userDetails(this.following_users_data[i].login).subscribe(res => {
               this.following_data = res.json();
-              this.listFollowing.push(this.following_data)
+              this.listFollowing.push(this.following_data);
             }, err => {
              this.error = err.json().message;
-            })
+            });
           }
-         
         }, err => {
           this.error = err.json().message;
-        })
+        });
 
       }, err => {
         this.error = err.json().message;
-      })
+      });
     });
 
 
@@ -104,24 +102,24 @@ export class GitUserInfoComponent implements OnInit {
 
    /*  get User followers Method */
 
-  follower(repourl) {
+  follower(repourl: string) {
     this.userservice.userDetails(repourl).subscribe(data => {
       this.followers_data = data.json();
-      this.followers_count = this.followers_data.length
+      this.followers_count = this.followers_data.length;
       for (let i = 0; i < this.followers_data.length / 3; i++) {
         this.userservice.userDetails(this.followers_data[i].login).subscribe(res => {
           this.followers_user_data = res.json();
-          this.listFollowers.push(this.followers_user_data)
+          this.listFollowers.push(this.followers_user_data);
         }, err => {
           this.error = err.json().message;
-        })
+        });
       }
     }, err => {
       this.error = err.json().message;
-    })
+    });
   }
 
-  openModal(cloneurl) {
+  openModal(cloneurl: any) {
     this.modal.open();
     this.clone_url = cloneurl;
   }
@@ -130,8 +128,8 @@ export class GitUserInfoComponent implements OnInit {
     this.modal.close();
   }
 
-  copyLink(){
-   $( "input" ).select();
-   document.execCommand("copy")
+  copyLink() {
+   $( 'input' ).select();
+   document.execCommand('copy');
   }
 }
