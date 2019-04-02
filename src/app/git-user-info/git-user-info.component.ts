@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from '../Services/user.service';
-import { Http } from '@angular/http';
+import { HttpClient } from '@angular/common/http';
+
 
 declare var $: any;
 
@@ -45,7 +46,7 @@ export class GitUserInfoComponent implements OnInit {
   error: any;
   userrepo: any[];
 
-  constructor(private route: ActivatedRoute, private userservice: UserService, private http: Http) { }
+  constructor(private route: ActivatedRoute, private userservice: UserService, private http: HttpClient) { }
 
   ngOnInit() {
     this.modal = $('#modal').remodal();
