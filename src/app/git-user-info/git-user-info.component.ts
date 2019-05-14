@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from '../Services/user.service';
-import { HttpClient } from '@angular/common/http';
+// import { Http } from '@angular/common/http';
+import { Http } from '@angular/http';
 
 
 declare var $: any;
@@ -46,10 +47,10 @@ export class GitUserInfoComponent implements OnInit {
   error: any;
   userrepo: any[];
 
-  constructor(private route: ActivatedRoute, private userservice: UserService, private http: HttpClient) { }
+  constructor( private route: ActivatedRoute, private userservice: UserService, private http: Http) { }
 
   ngOnInit() {
-    this.modal = $('#modal').remodal();
+  this.modal = $('#modal').remodal();
 
     this.route.paramMap.subscribe(params => {
       this.loginId = params.get('login');
@@ -78,7 +79,7 @@ export class GitUserInfoComponent implements OnInit {
 
         // tslint:disable-next-line:no-shadowed-variable
         this.http.get(this.following_url).subscribe(res => {
-          this.following_users_data = res.json();
+         this.following_users_data = res.json();
           this.following_count = this.following_users_data.length;
           for (let i = 0; i < this.following_users_data.length / 3; i++) {
             // tslint:disable-next-line:no-shadowed-variable

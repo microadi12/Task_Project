@@ -16,7 +16,7 @@ export class UserService {
       const header = new Headers({
         'Content-Type': 'application/json'
       });
-      return this.http.get(url, {headers : header});
+      return this.http.get(url);
    }
 
    userDetails(loginId: string) {
@@ -24,6 +24,6 @@ export class UserService {
       const header = new Headers({
         'Content-Type': 'application/json'
       });
-     return this.http.get(url, {headers : header});
+     return this.http.get(url);
    }
-}
+  }

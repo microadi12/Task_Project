@@ -24,7 +24,7 @@ export class GitSearchComponent implements OnInit {
   ngOnInit() { }
 /*   User Search method */
 
-  searchUser() {
+    searchUser() {
     this.searchList = [];
     this.userservice.userList(this.search).subscribe(res => {
 
@@ -34,8 +34,8 @@ export class GitSearchComponent implements OnInit {
       this.isCount_Visible = true;
       for (let i = 0; i < this.listUser.length / 4 ; i++) {
         // tslint:disable-next-line:no-shadowed-variable
-        this.userservice.userDetails(this.listUser[i].login).subscribe(res => {
-          this.search_user_data = res.json();
+        this.userservice.userDetails(this.listUser[i].login).subscribe(response => {
+          this.search_user_data = response.json();
           this.searchList.push(this.search_user_data);
         }, err => {
           this.error = err.json().message;
@@ -47,9 +47,8 @@ export class GitSearchComponent implements OnInit {
       this.showNotification('top', 'center', 'Something went to wrong ' + this.emptyList);
     });
   }
-
   // tslint:disable-next-line:member-ordering
-  p = 1;
+ p = 1;
   // tslint:disable-next-line:member-ordering
   collection: any[ ] = this.searchList;
   keyDownFunction(event, search) {
